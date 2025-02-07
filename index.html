@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Rose Day</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #ff6b6b, #ff868e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 450px;
+            height: 650px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s ease;
+        }
+
+        #rose-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: blur(8px);
+            transition: filter 0.5s ease;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            font-family: 'Great Vibes', cursive;
+            text-align: center;
+            color: #ff0000;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-in-out, heartBeat 1s infinite;
+            position: relative;
+        }
+
+        .buttons {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        #show-button {
+            background-color: #ffc0cb;
+            color: #800080;
+        }
+
+        #show-button:hover {
+            background-color: #ff7f9e;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        #not-interested-button {
+            background-color: #d3d3d3;
+            color: #333;
+        }
+
+        #not-interested-button:hover {
+            background-color: #c0c0c0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 1.8em;
+            color: #800080;
+            opacity: 0;
+            animation: fadeInMessage 2s forwards;
+        }
+
+        .cringe-emoji {
+            width: 50px;
+            height: 50px;
+            vertical-align: middle;
+            margin-left: 12px;
+        }
+
+        .image-gallery {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            overflow: auto;
+            padding-top: 40px;
+            animation: fadeInGallery 1s ease-out;
+        }
+
+        .gallery-image {
+            max-width: 220px;
+            max-height: 220px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        #special-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 8px;
+            transition: transform 0.5s ease;
+        }
+
+        #special-image:hover {
+            transform: rotate(10deg);
+        }
+
+        .happy-rose-day {
+            font-size: 2em;
+            font-family: 'Great Vibes', cursive;
+            color: #800080;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .love-heart {
+            position: absolute;
+            bottom: 10%;
+            right: 10%;
+            font-size: 3em;
+            color: #ff4d4d;
+            animation: heartPulse 1.5s infinite;
+        }
+
+        .love-heart-small {
+            position: absolute;
+            top: 5%;
+            left: 20%;
+            font-size: 2.5em;
+            color: #ff80a8;
+            animation: heartPulse 2s infinite;
+        }
+
+        .love-heart-medium {
+            position: absolute;
+            top: 25%;
+            left: 40%;
+            font-size: 3.5em;
+            color: #ff1a1a;
+            animation: heartPulse 1.7s infinite;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInMessage {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInGallery {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes heartBeat {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.2);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+
+            75% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartPulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container" id="main-container">
+        <video id="rose-video" autoplay muted loop>
+            <source src="https://v1.pinimg.com/videos/mc/720p/7c/4a/ed/7c4aed9226c969c57d9e9ca1ebca77eb.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <h2>A Surprise for You</h2>
+
+        <div class="buttons">
+            <button id="show-button">Show</button>
+            <button id="not-interested-button">Not Interested</button>
+        </div>
+
+        <div class="message" id="cringe-message">
+            Don't you love me? <img src="https://i.pinimg.com/736x/fb/52/21/fb52218cbab5e128ff3622c0af3e4583.jpg" alt="Cringe Emoji" class="cringe-emoji">
+        </div>
+    </div>
+
+    <div class="image-gallery" id="rose-gallery">
+        <img src="https://i.pinimg.com/736x/c8/2c/81/c82c81acff1dce5d244d742f7b8fa837.jpg" alt="Rose 1" class="gallery-image">
+        <img src="https://i.pinimg.com/736x/4a/1b/fc/4a1bfc510a9cd565b72460fd2a5c9587.jpg" alt="Rose 2" class="gallery-image">
+        <img src="https://i.pinimg.com/736x/c7/72/37/c772379849d2dd1cab15b86e619c6667.jpg" alt="Rose 3" class="gallery-image">
+        <img src="https://i.pinimg.com/736x/9d/e8/c0/9de8c0963937a36bce5ae6df0ec9cf5d.jpg" alt="Rose 4" class="gallery-image">
+        <img src="https://i.pinimg.com/736x/d6/96/02/d6960232dec21a5d26f6e61d7db882a4.jpg" alt="Rose 5" class="gallery-image">
+        <img src="https://i.pinimg.com/736x/0e/e9/ce/0ee9ceff75ce8b8b975e0f7ca825b52a.jpg" alt="Special Image" class="gallery-image" id="special-image">
+        <div class="happy-rose-day">Happy Rose Day Darling</div>
+
+        <div class="love-heart">❤️</div>
+        <div class="love-heart-small">💖</div>
+        <div class="love-heart-medium">💘</div>
+    </div>
+
+    <script>
+        const showButton = document.getElementById('show-button');
+        const notInterestedButton = document.getElementById('not-interested-button');
+        const cringeMessage = document.getElementById('cringe-message');
+        const roseGallery = document.getElementById('rose-gallery');
+        const mainContainer = document.getElementById('main-container');
+        const roseVideo = document.getElementById('rose-video');
+
+        notInterestedButton.addEventListener('click', () => {
+            notInterestedButton.style.transition = "all 0.5s ease";
+            notInterestedButton.style.transform = "translate(500px, -200px)";
+            cringeMessage.style.opacity = 1;
+            roseVideo.style.filter = "blur(20px)";
+        });
+
+        showButton.addEventListener('click', () => {
+            mainContainer.style.transform = "scale(0)";
+            setTimeout(() => {
+                mainContainer.style.display = "none";
+                roseGallery.style.display = "flex";
+            }, 500);
+        });
+    </script>
+
+</body>
+
+</html>
